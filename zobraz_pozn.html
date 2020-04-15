@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Poznámkovník</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+</head>
+<body>
+    <center>
+<h1>POZNÁMKY</h1>
+
+    {% for i in poznamky %}
+    
+     <br>  
+            <div class="pozadi">
+                <span class="dot"></span>
+           <br> {{ i[1] }} <br>
+            {{ i[2] }} <br>
+            <a href="/smaz/{{ i[0] }}">Smazat</a>
+            <a href="/uprav/{{ i[0] }}">Upravit</a>
+            <br>
+            
+        </div>
+        
+     
+    {% endfor %}
+
+
+    <br>
+ <h3><a href="/poznamka/vlozit">Vložit poznámku</a></h3>
+</center>
+</body>
+</html>
