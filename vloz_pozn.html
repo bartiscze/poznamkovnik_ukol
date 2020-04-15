@@ -9,7 +9,7 @@
 
  <center> <h1> <u>ONLINE POZNÁMKY</u></h1>
     
-<form method="POST" action="/poznamka/vlozit">
+<form method="POST">
     {{ form.csrf_token }}
     {{ form.poznamka() }}
     <input type="submit" value="Uložit">
