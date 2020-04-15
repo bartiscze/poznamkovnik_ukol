@@ -91,7 +91,7 @@ def uprav_poznamku(poznamka_id):
         c.execute("UPDATE poznamka SET telo=? WHERE rowid=?", (poznamka_text, poznamka_id,))
         conn.commit()
         conn.close()
-        return redirect('/poznamky')
+        return redirect('/')
     return render_template('vloz_poznamku.html', form=form)
 
 
