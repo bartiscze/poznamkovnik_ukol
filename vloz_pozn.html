@@ -8,13 +8,14 @@
 <body>
 
  <center> <h1> <u>ONLINE POZNÁMKY</u></h1>
-    
-<form method="POST">
+
+<center><form method="POST">
     {{ form.csrf_token }}
     {{ form.poznamka() }}
+    {{ form.dulezitost() }}
     <input type="submit" value="Uložit">
-</form>
-    
+</form> </center>
+
  <h3><a href="/">Moje poznámky</a> </h3>
  </center>
 </body>
