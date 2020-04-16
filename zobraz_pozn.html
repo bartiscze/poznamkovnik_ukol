@@ -10,17 +10,24 @@
 <h1>POZNÁMKY</h1>
 
     {% for i in poznamky %}
-    
+   
      <br>  
-            <div class="pozadi">
+            <div class="pozadi"¨
+            {% if i[3] == 1 %}style="border-color:yellow;"{% endif %}
+            {% if i[3] == 2 %}style="border-color:blue;"{% endif %}
+            {% if i[3] == 3 %}style="border-color:red;"{% endif %}>
+                        
                 <span class="dot"></span>
            <br> {{ i[1] }} <br>
-            {{ i[2] }} <br>
+        {{ i[2] }} <br>
+        {{ i[3] }}
             <a href="/smaz/{{ i[0] }}">Smazat</a>
             <a href="/uprav/{{ i[0] }}">Upravit</a>
             <br>
             
         </div>
+    </div>
+        
         
      
     {% endfor %}
