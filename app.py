@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, length
 from wtforms import TextAreaField
+from wtforms import RadioField
 
 app = Flask(__name__)
 app.debug = True
@@ -17,6 +18,7 @@ databaze = (os.path.join(aktualni_adresar, 'poznamky.db'))
 
 class PoznamkaForm(FlaskForm):
     poznamka = TextAreaField('Poznámka', validators=[DataRequired(), length(max=250)])
+    dulezitost = RadioField("Dulezitost",choices=[("1", 'málo důležitá poznámka (ŽLUTÁ)'), ("2", 'středně důležitá poznámka (MODRÁ)'), ("3", 'důležitá poznámka (ČERVENÁ)')])
 
 
 @app.route('/poznamka/vlozit', methods=['GET', 'POST'])
@@ -24,6 +26,7 @@ def vloz_poznamku():
     """Zobrazí folrmulář a vloží poznámku."""
     form = PoznamkaForm()
     poznamka_text = form.poznamka.data
+    dulezitost = form.dulezitost.data
     if form.validate_on_submit():
         conn = sqlite3.connect(databaze)
         c = conn.cursor()
@@ -31,7 +34,7 @@ def vloz_poznamku():
         # https://docs.python.org/3/library/sqlite3.html
         # a hledejte text: Never do this -- insecure!
         # Aby nedošlo k útoku SQL injection na vaší aplikaci:
-        c.execute("INSERT INTO poznamka(telo) VALUES (?)", (poznamka_text,))
+        c.execute("INSERT INTO poznamka(telo,dulezitost) VALUES (?,?)", (poznamka_text,dulezitost,))
         conn.commit()
         conn.close()
         return redirect('/')
@@ -47,7 +50,7 @@ def zobraz_poznamky():
     # číslo sloupce budeme potřebovat později...
     # využijeme ho jako primární klíč.
     # viz: https://www.sqlitetutorial.net/sqlite-autoincrement/
-    c.execute("SELECT rowid, telo, kdy FROM poznamka ORDER BY rowid DESC")
+    c.execute("SELECT rowid, telo, kdy, dulezitost FROM poznamka ORDER BY rowid DESC")
     # Chci všechno - použiju fetchall()
     poznamky = c.fetchall()
     conn.close()
